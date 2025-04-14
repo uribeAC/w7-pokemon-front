@@ -6,11 +6,10 @@
 
 body {
   margin: 0;
+  font-family: "Pixelify Sans Variable", system-ui;
+  background-color: #4b6ab8;
 }
 
-.main-container {
-  height: 100vh;
-  max-width: 1900px;
-  margin: 0 auto;
-  padding: 20px;
+h1 {
+  margin: 0;
 }
