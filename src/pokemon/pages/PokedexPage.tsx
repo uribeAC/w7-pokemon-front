@@ -1,11 +1,9 @@
 import React from "react";
 import { Pokemon } from "../../types";
 
-interface PokedexPageProps {
-  pokemons: Pokemon[];
-}
+const PokedexPage: React.FC = () => {
+  const pokemons: Pokemon[] = [];
 
-const PokedexPage: React.FC<PokedexPageProps> = ({ pokemons }) => {
   return (
     <>
       <header className="page-header">
