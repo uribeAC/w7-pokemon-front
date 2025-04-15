@@ -1,5 +1,6 @@
 import React from "react";
 import { Pokemon } from "../../../types";
+import "./Pokedex.css";
 
 interface PokedexProps {
   pokemons: Pokemon[];
