@@ -1,11 +1,12 @@
+import { NavLink } from "react-router";
 import "./Navigation.css";
 
 const Navigation: React.FC = () => {
   return (
     <nav className="navigation">
-      <a className="navigation__link" href="/">
-        Pokemons
-      </a>
+      <NavLink className="navigation__link" to="/pokedex">
+        Pokedex
+      </NavLink>
     </nav>
   );
 };
