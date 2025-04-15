@@ -1,6 +1,9 @@
 :root {
   --primary-color: #ffcb05;
   --secondary-color: #1e3874;
+  --background-color: #2d6db4;
+  --border: 2px solid var(--secondary-color);
+  --outline: 4px solid var(--primary-color);
 }
 
 *,
