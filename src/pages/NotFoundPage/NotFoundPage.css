@@ -1,0 +1,38 @@
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 30px;
+  border: var(--border);
+  outline: var(--outline);
+  background-color: var(--background-color);
+}
+
+.not-found-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.not-found-text__title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  text-shadow:
+    -3px -3px 0 var(--secondary-color),
+    3px -3px 0 var(--secondary-color),
+    -3px 3px 0 var(--secondary-color),
+    3px 3px 0 var(--secondary-color);
+}
+
+.not-found-text__status {
+  font-size: 8rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  text-shadow:
+    -5px -5px 0 var(--secondary-color),
+    5px -5px 0 var(--secondary-color),
+    -5px 5px 0 var(--secondary-color),
+    5px 5px 0 var(--secondary-color);
+}
