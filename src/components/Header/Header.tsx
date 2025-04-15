@@ -1,5 +1,6 @@
 import React from "react";
 import "./Header.css";
+import Navigation from "../Navigation/Navigation";
 
 const Header: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const Header: React.FC = () => {
         width={80}
         height={57}
       />
+      <Navigation />
     </header>
   );
 };
