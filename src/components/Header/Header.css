@@ -54,9 +54,14 @@
   position: absolute;
   z-index: 0;
   bottom: 10px;
-  animation-duration: 10s;
+  animation-duration: 8s;
+  animation-timing-function: linear;
   animation-name: running;
   animation-iteration-count: infinite;
+
+  @media (prefers-reduced-motion) {
+    display: none;
+  }
 }
 
 @keyframes running {
