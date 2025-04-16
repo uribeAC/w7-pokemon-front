@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Pokedex from "../../components/Pokedex/Pokedex";
 import usePokemons from "../../hooks/usePokemons";
 import "./PokedexPage.css";
 
 const PokedexPage: React.FC = () => {
-  const { pokemons } = usePokemons();
+  const { pokemons, loadPokemons } = usePokemons();
+
+  useEffect(() => {
+    loadPokemons();
+  }, [loadPokemons]);
 
   const pokemonsTotal = pokemons.length;
 
