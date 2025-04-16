@@ -1,4 +1,5 @@
 import { Pokemon } from "../../types";
+import { mapPokemonDtoToPokemon } from "../dto/transformers";
 import { PokemonDto } from "../dto/types";
 import { PokemonClientStructure } from "./types";
 
@@ -28,7 +29,7 @@ class PokemonClient implements PokemonClientStructure {
           pokemonTypes.push(apiType);
         });
 
-        const pokemon: Pokemon = { ...pokemonDto, types: pokemonTypes };
+        const pokemon = mapPokemonDtoToPokemon(pokemonDto, pokemonTypes);
 
         return pokemon;
       },
