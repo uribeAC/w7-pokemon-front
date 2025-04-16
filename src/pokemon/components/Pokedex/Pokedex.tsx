@@ -11,7 +11,7 @@ const Pokedex: React.FC<PokedexProps> = ({ pokemons }) => {
   return (
     <ul className="pokemons">
       {pokemons.map((pokemon) => (
-        <li key={`${pokemon.id}${Date.now}`}>
+        <li key={pokemon.id}>
           <Pokecard pokemon={pokemon} />
         </li>
       ))}

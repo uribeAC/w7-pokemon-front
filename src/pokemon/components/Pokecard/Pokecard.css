@@ -1,14 +1,14 @@
 .pokemon {
-  aspect-ratio: 1;
-  border: var(--outline);
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 10px;
+  aspect-ratio: 1;
+  border: var(--outline);
+  color: var(--primary-color);
   background-color: #1e3874;
   box-shadow: inset 0px 0px 50px 10px #152d63;
-  color: var(--primary-color);
-  padding: 10px;
 }
 
 .pokemon__data {
