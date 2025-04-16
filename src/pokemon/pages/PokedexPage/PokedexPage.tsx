@@ -1,10 +1,10 @@
 import React from "react";
 import Pokedex from "../../components/Pokedex/Pokedex";
-import { Pokemon } from "../../../types";
+import usePokemons from "../../hooks/usePokemons";
 import "./PokedexPage.css";
 
 const PokedexPage: React.FC = () => {
-  const pokemons: Pokemon[] = [];
+  const { pokemons } = usePokemons();
 
   const pokemonsTotal = pokemons.length;
 
