@@ -1,13 +1,23 @@
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useCallback, useMemo, useState } from "react";
 import { Pokemon } from "../../types";
 import PokemonContext from "./PokemonContext";
 import PokemonContextStructure from "./types";
+import PokemonClient from "../client/PokemonClient";
 
 const PokemonContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [pokemons] = useState<Pokemon[]>([]);
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+
+  const pokemonClient = useMemo(() => new PokemonClient(), []);
+
+  const loadPokemons = useCallback(async (): Promise<void> => {
+    const apiPokemons = await pokemonClient.getPokemons();
+
+    setPokemons(apiPokemons);
+  }, [pokemonClient]);
 
   const pokemonsContextValue: PokemonContextStructure = {
     pokemons,
+    loadPokemons,
   };
 
   return (
