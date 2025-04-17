@@ -1,8 +1,7 @@
 import { Pokemon } from "../../types";
 import { mapPokemonDtoToPokemon } from "../dto/transformers";
 import { PokemonDto } from "../dto/types";
-import { PokemonClientStructure } from "./types";
-
+import { PokemonClientStructure, pokemonsTypes } from "./types";
 class PokemonClient implements PokemonClientStructure {
   private apiUrl = import.meta.env.VITE_API_URL;
 
@@ -13,21 +12,17 @@ class PokemonClient implements PokemonClientStructure {
       pokemons: PokemonDto[];
     };
 
-    const pokemonsPromise = backPokemons.map(
+    const pokemonsPromises = backPokemons.map(
       async (pokemonDto): Promise<Pokemon> => {
         const apiPokemon = await fetch(
-          `https://pokeapi.co/api/v2/pokemon/${pokemonDto.name}`,
+          `https://pokeapi.co/api/v2/pokemon/${pokemonDto.name.toLowerCase()}`,
         );
 
-        const apiPokemonTypes = (await apiPokemon.json()) as {
-          types: [{ type: { name: string } }, { type: { name: string } }];
-        };
+        const apiPokemonTypes = (await apiPokemon.json()) as pokemonsTypes;
 
-        const pokemonTypes: string[] = [];
-        apiPokemonTypes.types.forEach((type) => {
-          const apiType = type.type.name;
-          pokemonTypes.push(apiType);
-        });
+        const pokemonTypes = apiPokemonTypes.types.map(
+          (type) => type.type.name,
+        );
 
         const pokemon = mapPokemonDtoToPokemon(pokemonDto, pokemonTypes);
 
@@ -35,7 +30,7 @@ class PokemonClient implements PokemonClientStructure {
       },
     );
 
-    const pokemons = await Promise.all(pokemonsPromise);
+    const pokemons = await Promise.all(pokemonsPromises);
 
     return pokemons;
   }

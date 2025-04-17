@@ -9,6 +9,12 @@
   color: var(--primary-color);
   background-color: #1e3874;
   box-shadow: inset 0px 0px 50px 10px #152d63;
+
+  &:hover {
+    transition: 1s;
+    scale: 1.07;
+    box-shadow: inset 0px 0px 80px 10px #0b1c42;
+  }
 }
 
 .pokemon__data {

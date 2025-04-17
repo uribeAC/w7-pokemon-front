@@ -1,7 +1,7 @@
 import React from "react";
 import { Pokemon } from "../../../types";
-import "./Pokedex.css";
 import Pokecard from "../Pokecard/Pokecard";
+import "./Pokedex.css";
 
 interface PokedexProps {
   pokemons: Pokemon[];
