@@ -1,13 +1,26 @@
 import { render, screen } from "@testing-library/react";
-import PokemonForm from "./PokemonForm";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router";
+import PokemonForm from "./PokemonForm";
+import PokemonContextProvider from "../../context/PokemonContextProvider";
 
 const user = userEvent.setup();
 
 describe("Given the PokemonForm component", () => {
+  const action = vitest.fn();
+
+  beforeEach(() => {
+    action.mockClear();
+  });
+
   describe("When it renders", () => {
     test("Then it should a 'Name' text box", () => {
-      render(<PokemonForm />);
+      render(
+        <MemoryRouter>
+          <PokemonForm action={action} />
+        </MemoryRouter>,
+        { wrapper: PokemonContextProvider },
+      );
 
       const nameTextBox = screen.getByLabelText(/name/i);
 
@@ -15,7 +28,12 @@ describe("Given the PokemonForm component", () => {
     });
 
     test("Then it should show 'Add to pokedex' inside a button", () => {
-      render(<PokemonForm />);
+      render(
+        <MemoryRouter>
+          <PokemonForm action={action} />
+        </MemoryRouter>,
+        { wrapper: PokemonContextProvider },
+      );
 
       const addButton = screen.getByRole("button", { name: /add to pokedex/i });
 
@@ -23,7 +41,12 @@ describe("Given the PokemonForm component", () => {
     });
 
     test("Then it should show a 'Add to pokedex' button disabled", () => {
-      render(<PokemonForm />);
+      render(
+        <MemoryRouter>
+          <PokemonForm action={action} />
+        </MemoryRouter>,
+        { wrapper: PokemonContextProvider },
+      );
 
       const addButton = screen.getByRole("button", { name: /add to pokedex/i });
 
@@ -33,7 +56,12 @@ describe("Given the PokemonForm component", () => {
 
   describe("And the user types 'Chimchar' in 'Name' text box", () => {
     test("Then it should show 'Chimchar' in 'Name' text box", async () => {
-      render(<PokemonForm />);
+      render(
+        <MemoryRouter>
+          <PokemonForm action={action} />
+        </MemoryRouter>,
+        { wrapper: PokemonContextProvider },
+      );
       const pokemonName = "Chimchar";
 
       const nameTextBox = screen.getByLabelText(/name/i);
