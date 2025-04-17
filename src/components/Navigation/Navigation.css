@@ -1,9 +1,16 @@
 .navigation {
+  display: flex;
   align-self: center;
+  gap: 5px;
   z-index: 1;
+
+  @media (width > 800px) {
+    flex-direction: column;
+  }
 }
 
 .navigation__link {
+  align-self: center;
   font-size: 1.5rem;
   font-weight: 1000;
   letter-spacing: 2px;

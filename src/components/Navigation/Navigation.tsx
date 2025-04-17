@@ -7,6 +7,9 @@ const Navigation: React.FC = () => {
       <NavLink className="navigation__link" to="/pokedex">
         Pokedex
       </NavLink>
+      <NavLink className="navigation__link" to="/add-pokemon">
+        Add Pokemon
+      </NavLink>
     </nav>
   );
 };
