@@ -23,7 +23,7 @@ const Pokecard: React.FC<PokecardProps> = ({ pokemon }) => {
         <h3 className="pokemon__name">{pokemon.name}</h3>
         <div className="pokemon__types">
           {pokemon.types.map((type) => (
-            <span className={`pokemon__type pokemon__type--${type}`}>
+            <span key={type} className={`pokemon__type pokemon__type--${type}`}>
               {type}
             </span>
           ))}
