@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import { PokemonFormData } from "../../types";
-import "./PokemonForm.css";
-import usePokemons from "../../hooks/usePokemons";
+import { Pokemon, PokemonCommonData, PokemonFormData } from "../../types";
 import PokemonClient from "../../client/PokemonClient";
+import "./PokemonForm.css";
+import { useNavigate } from "react-router";
+import FormError from "../../../components/FormError/FormError";
 
-const PokemonForm: React.FC = () => {
+interface PokemonFormProps {
+  action: (pokemonCommonData: PokemonCommonData) => Promise<Pokemon>;
+}
+
+const PokemonForm: React.FC<PokemonFormProps> = ({ action }) => {
   const initialPokemonFormData: PokemonFormData = {
     name: "",
   };
@@ -22,7 +27,8 @@ const PokemonForm: React.FC = () => {
   const isFormValid = pokemonData.name !== "";
 
   const pokemonClient = new PokemonClient();
-  const { createPokemon } = usePokemons();
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const onSubmitForm = async (
     event: React.FormEvent<HTMLFormElement>,
@@ -30,13 +36,26 @@ const PokemonForm: React.FC = () => {
     event.preventDefault();
 
     try {
-      const pokemonCommonData = pokemonClient.getPokemonPokedexPosition(
+      const pokemonCommonData = await pokemonClient.getPokemonPokedexPosition(
         pokemonData.name,
       );
 
-      await createPokemon(await pokemonCommonData);
+      try {
+        await action(pokemonCommonData);
+
+        navigate("/pokedex");
+      } catch {
+        setErrorMessage("Pokemon already in pokedex");
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 5000);
+        return;
+      }
     } catch {
-      throw new Error("Pokemon dosen't exist");
+      setErrorMessage("Pokemon dosen't exist");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000);
     }
   };
 
@@ -62,6 +81,7 @@ const PokemonForm: React.FC = () => {
       >
         Add to pokedex
       </button>
+      <FormError message={errorMessage} />
     </form>
   );
 };
