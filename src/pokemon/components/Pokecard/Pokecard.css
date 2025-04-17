@@ -69,12 +69,12 @@
 
 .pokemon__type--fire {
   background-color: #ee8130;
-  color: #fff;
+  color: #000;
 }
 
 .pokemon__type--water {
   background-color: #6390f0;
-  color: #fff;
+  color: #000;
 }
 
 .pokemon__type--electric {
@@ -94,7 +94,7 @@
 
 .pokemon__type--fighting {
   background-color: #c22e28;
-  color: #fff;
+  color: #000;
 }
 
 .pokemon__type--poison {
@@ -114,7 +114,7 @@
 
 .pokemon__type--psychic {
   background-color: #f95587;
-  color: #fff;
+  color: #000;
 }
 
 .pokemon__type--bug {
@@ -129,17 +129,17 @@
 
 .pokemon__type--ghost {
   background-color: #735797;
-  color: #fff;
+  color: #000;
 }
 
 .pokemon__type--dragon {
   background-color: #6f35fc;
-  color: #fff;
+  color: #000;
 }
 
 .pokemon__type--dark {
   background-color: #705746;
-  color: #fff;
+  color: #000;
 }
 
 .pokemon__type--steel {

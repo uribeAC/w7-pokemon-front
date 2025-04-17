@@ -39,3 +39,18 @@ li {
 img {
   max-width: 100%;
 }
+
+input {
+  font: inherit;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+button {
+  font: inherit;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
