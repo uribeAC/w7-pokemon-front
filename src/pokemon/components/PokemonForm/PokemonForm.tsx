@@ -3,6 +3,7 @@ import { Pokemon, PokemonCommonData, PokemonFormData } from "../../types";
 import PokemonClient from "../../client/PokemonClient";
 import "./PokemonForm.css";
 import { useNavigate } from "react-router";
+import FormError from "../../../components/FormError/FormError";
 
 interface PokemonFormProps {
   action: (pokemonCommonData: PokemonCommonData) => Promise<Pokemon>;
@@ -27,6 +28,7 @@ const PokemonForm: React.FC<PokemonFormProps> = ({ action }) => {
 
   const pokemonClient = new PokemonClient();
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const onSubmitForm = async (
     event: React.FormEvent<HTMLFormElement>,
@@ -34,19 +36,26 @@ const PokemonForm: React.FC<PokemonFormProps> = ({ action }) => {
     event.preventDefault();
 
     try {
-      const pokemonCommonData = pokemonClient.getPokemonPokedexPosition(
+      const pokemonCommonData = await pokemonClient.getPokemonPokedexPosition(
         pokemonData.name,
       );
 
       try {
-        await action(await pokemonCommonData);
+        await action(pokemonCommonData);
 
         navigate("/pokedex");
       } catch {
-        console.log("error");
+        setErrorMessage("Pokemon already in pokedex");
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 5000);
+        return;
       }
     } catch {
-      throw new Error("Pokemon dosen't exist");
+      setErrorMessage("Pokemon dosen't exist");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000);
     }
   };
 
@@ -72,6 +81,7 @@ const PokemonForm: React.FC<PokemonFormProps> = ({ action }) => {
       >
         Add to pokedex
       </button>
+      <FormError message={errorMessage} />
     </form>
   );
 };
