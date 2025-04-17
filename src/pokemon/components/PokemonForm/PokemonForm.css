@@ -67,4 +67,8 @@
     transition: 0.1s;
     scale: 1.01;
   }
+
+  &:disabled {
+    cursor: no-drop;
+  }
 }

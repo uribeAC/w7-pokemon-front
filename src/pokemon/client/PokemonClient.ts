@@ -1,4 +1,4 @@
-import { Pokemon } from "../../types";
+import { Pokemon } from "../types";
 import { mapPokemonDtoToPokemon } from "../dto/transformers";
 import { PokemonDto } from "../dto/types";
 import { PokemonClientStructure, pokemonsTypes } from "./types";

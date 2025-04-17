@@ -7,3 +7,8 @@ export type Pokemon = {
   imageAlt: string;
   isCaptured: boolean;
 };
+
+export type PokemonFormData = Omit<
+  Pokemon,
+  "id" | "pokedexPosition" | "types" | "imageUrl" | "imageAlt" | "isCaptured"
+>;
