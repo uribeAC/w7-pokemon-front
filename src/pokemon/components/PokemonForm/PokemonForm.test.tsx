@@ -70,5 +70,21 @@ describe("Given the PokemonForm component", () => {
 
       expect(nameTextBox).toHaveValue(pokemonName);
     });
+
+    test("Then it should show a 'Add to pokedex' button enabled", async () => {
+      render(
+        <MemoryRouter>
+          <PokemonForm action={action} />
+        </MemoryRouter>,
+        { wrapper: PokemonContextProvider },
+      );
+
+      const nameTextBox = screen.getByLabelText(/name/i);
+      await user.type(nameTextBox, "Chimchar");
+
+      const addButton = screen.getByRole("button", { name: /add to pokedex/i });
+
+      expect(addButton).toBeEnabled();
+    });
   });
 });
