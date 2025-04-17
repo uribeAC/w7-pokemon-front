@@ -39,18 +39,25 @@ class PokemonClient implements PokemonClientStructure {
     return pokemons;
   }
 
-  public async getPokemonPokedexPosition(pokemonName: string): Promise<string> {
-    const pokemon = await fetch(
+  public async getPokemonPokedexPosition(
+    pokemonName: string,
+  ): Promise<PokemonCommonData> {
+    const apiPokemon = await fetch(
       `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`,
     );
 
-    const pokedexPosition = (await pokemon.json()) as { id: number };
+    const pokedexPosition = (await apiPokemon.json()) as { id: number };
 
     const pokemonPokedexPosition = pokedexPosition.id
       .toString()
       .padStart(4, "0");
 
-    return pokemonPokedexPosition;
+    const pokemon: PokemonCommonData = {
+      name: pokemonName,
+      pokedexPosition: pokemonPokedexPosition,
+    };
+
+    return pokemon;
   }
 
   public async addPokemon(

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { PokemonFormData } from "../../types";
 import "./PokemonForm.css";
+import usePokemons from "../../hooks/usePokemons";
+import PokemonClient from "../../client/PokemonClient";
 
 const PokemonForm: React.FC = () => {
   const initialPokemonFormData: PokemonFormData = {
@@ -19,8 +21,27 @@ const PokemonForm: React.FC = () => {
 
   const isFormValid = pokemonData.name !== "";
 
+  const pokemonClient = new PokemonClient();
+  const { createPokemon } = usePokemons();
+
+  const onSubmitForm = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
+    event.preventDefault();
+
+    try {
+      const pokemonCommonData = pokemonClient.getPokemonPokedexPosition(
+        pokemonData.name,
+      );
+
+      await createPokemon(await pokemonCommonData);
+    } catch {
+      throw new Error("Pokemon dosen't exist");
+    }
+  };
+
   return (
-    <form className="pokemon-form" action="">
+    <form className="pokemon-form" onSubmit={onSubmitForm}>
       <div className="pokemon-form__group">
         <label htmlFor="name" className="pokemon-form__text">
           Name:
