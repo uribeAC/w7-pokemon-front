@@ -10,6 +10,10 @@ class PokemonClient implements PokemonClientStructure {
       `https://pokeapi.co/api/v2/pokemon/${pokemonDto.name.toLowerCase()}`,
     );
 
+    if (!apiPokemon.ok) {
+      throw new Error("Error fetching pokemon types");
+    }
+
     const apiPokemonTypes = (await apiPokemon.json()) as pokemonsTypes;
 
     const pokemonTypes = apiPokemonTypes.types.map((type) => type.type.name);
@@ -21,6 +25,10 @@ class PokemonClient implements PokemonClientStructure {
 
   public async getPokemons(): Promise<Pokemon[]> {
     const response = await fetch(`${this.apiUrl}/pokemon`);
+
+    if (!response.ok) {
+      throw new Error("Error fetching pokemons");
+    }
 
     const { pokemons: backPokemons } = (await response.json()) as {
       pokemons: PokemonDto[];
@@ -46,6 +54,10 @@ class PokemonClient implements PokemonClientStructure {
       `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`,
     );
 
+    if (!apiPokemon.ok) {
+      throw new Error("Error fetching pokemon pokedex position");
+    }
+
     const pokedexPosition = (await apiPokemon.json()) as { id: number };
 
     const pokemonPokedexPosition = pokedexPosition.id
@@ -68,6 +80,10 @@ class PokemonClient implements PokemonClientStructure {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(pokemonCommonData),
     });
+
+    if (!response.ok) {
+      throw new Error("Error adding new pokemon");
+    }
 
     const newPokemonDto = (await response.json()) as PokemonDto;
 
