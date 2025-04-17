@@ -1,5 +1,5 @@
 import { PropsWithChildren, useCallback, useMemo, useState } from "react";
-import { Pokemon } from "../../types";
+import { Pokemon } from "../types";
 import PokemonContext from "./PokemonContext";
 import PokemonContextStructure from "./types";
 import PokemonClient from "../client/PokemonClient";

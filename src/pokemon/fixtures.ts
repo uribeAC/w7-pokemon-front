@@ -1,4 +1,4 @@
-import { Pokemon } from "../types";
+import { Pokemon } from "./types";
 
 export const vaporeon: Pokemon = {
   id: "987654321",
