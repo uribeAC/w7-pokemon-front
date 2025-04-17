@@ -1,7 +1,7 @@
 import { Pokemon } from "../types";
 import { PokemonDto } from "./types";
 
-export const mapPokemonDtoToPokemon = (
+export const mapPokemonDtoToPokemonWithTypes = (
   { name, pokedexPosition, ...pokemonDto }: PokemonDto,
   pokemonTypes: string[],
 ): Pokemon => {

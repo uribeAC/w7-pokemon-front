@@ -12,3 +12,8 @@ export type PokemonFormData = Omit<
   Pokemon,
   "id" | "pokedexPosition" | "types" | "imageUrl" | "imageAlt" | "isCaptured"
 >;
+
+export type PokemonCommonData = Omit<
+  Pokemon,
+  "id" | "types" | "imageUrl" | "imageAlt" | "isCaptured"
+>;
