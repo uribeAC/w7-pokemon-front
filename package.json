@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@fontsource-variable/pixelify-sans": "^5.2.5",
+    "@testing-library/user-event": "^14.6.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.5.0"
