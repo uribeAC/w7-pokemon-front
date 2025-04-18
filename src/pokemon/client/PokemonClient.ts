@@ -98,6 +98,10 @@ class PokemonClient implements PokemonClientStructure {
       headers: { "Content-Type": "application/json" },
     });
 
+    if (!response.ok) {
+      throw new Error("Error deleting pokemon");
+    }
+
     const deletedPokemonDto = (await response.json()) as PokemonDto;
 
     return deletedPokemonDto;
