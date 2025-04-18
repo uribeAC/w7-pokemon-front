@@ -11,7 +11,7 @@ const Pokecard: React.FC<PokecardProps> = ({
   pokemon: { id, imageAlt, imageUrl, isCaptured, name, pokedexPosition, types },
 }) => {
   const pokeballClass = isCaptured ? "" : " pokemon__pokeball--free";
-  const { deletePokemonById } = usePokemons();
+  const { deletePokemonById, togglePokeball } = usePokemons();
 
   return (
     <article className="pokemon">
@@ -41,7 +41,10 @@ const Pokecard: React.FC<PokecardProps> = ({
           ))}
         </div>
       </div>
-      <button className="pokemon__toggle-button">
+      <button
+        className="pokemon__toggle-button"
+        onClick={() => togglePokeball(id, isCaptured)}
+      >
         <img
           src="/pokeball.svg"
           alt="pokeball"

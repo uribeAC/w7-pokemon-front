@@ -39,12 +39,30 @@ const PokemonContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     );
   };
 
+  const togglePokeball = async (
+    pokemonId: string,
+    isCaptured: boolean,
+  ): Promise<void> => {
+    if (!isCaptured) {
+      const pokemonCaptured = await pokemonClient.addToPokeball(pokemonId);
+
+      const pokemonPosition = pokemons.findIndex(
+        (pokemon) => pokemon.id === pokemonId,
+      );
+
+      setPokemons((pokemons) =>
+        pokemons.toSpliced(pokemonPosition, 1, pokemonCaptured),
+      );
+    }
+  };
+
   const pokemonsContextValue: PokemonContextStructure = {
     pokemons,
     getAllPokemonNames,
     loadPokemons,
     createPokemon,
     deletePokemonById,
+    togglePokeball,
   };
 
   return (

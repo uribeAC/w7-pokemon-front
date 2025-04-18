@@ -124,6 +124,26 @@ class PokemonClient implements PokemonClientStructure {
 
     return deletedPokemonDto;
   }
+
+  public async addToPokeball(pokemonId: string): Promise<Pokemon> {
+    const response = await fetch(
+      `${this.apiUrl}/pokemon/add-to-poke-ball/${pokemonId}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Error adding pokemon to pokeball");
+    }
+
+    const pokemonCapturedDto = (await response.json()) as PokemonDto;
+
+    const pokemonCaptured = this.getPokemonWithTypes(pokemonCapturedDto);
+
+    return pokemonCaptured;
+  }
 }
 
 export default PokemonClient;
