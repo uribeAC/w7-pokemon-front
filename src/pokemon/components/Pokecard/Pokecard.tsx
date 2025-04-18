@@ -1,28 +1,40 @@
 import React from "react";
 import { Pokemon } from "../../types";
+import usePokemons from "../../hooks/usePokemons";
 import "./Pokecard.css";
 
 interface PokecardProps {
   pokemon: Pokemon;
 }
 
-const Pokecard: React.FC<PokecardProps> = ({ pokemon }) => {
-  const pokeballClass = pokemon.isCaptured ? "" : " pokemon__pokeball--free";
+const Pokecard: React.FC<PokecardProps> = ({
+  pokemon: { id, imageAlt, imageUrl, isCaptured, name, pokedexPosition, types },
+}) => {
+  const pokeballClass = isCaptured ? "" : " pokemon__pokeball--free";
+  const { deletePokemonById } = usePokemons();
 
   return (
     <article className="pokemon">
       <img
-        src={`${pokemon.imageUrl}`}
-        alt={`${pokemon.imageAlt}`}
+        src={`${imageUrl}`}
+        alt={`${imageAlt}`}
         className="pokemon__image"
         width={200}
         height={200}
       />
-      <span className="pokemon__position">{pokemon.pokedexPosition}</span>
-      <div className="pokemon__data">
-        <h3 className="pokemon__name">{pokemon.name}</h3>
+      <div className="pokemon__top-data">
+        <span className="pokemon__position">{pokedexPosition}</span>
+        <button
+          className="pokemon__delete-button"
+          onClick={() => deletePokemonById(id)}
+        >
+          X
+        </button>
+      </div>
+      <div className="pokemon__bottom-data">
+        <h3 className="pokemon__name">{name}</h3>
         <div className="pokemon__types">
-          {pokemon.types.map((type) => (
+          {types.map((type) => (
             <span key={type} className={`pokemon__type pokemon__type--${type}`}>
               {type}
             </span>
