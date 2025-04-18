@@ -8,9 +8,15 @@ interface PokedexProps {
 }
 
 const Pokedex: React.FC<PokedexProps> = ({ pokemons }) => {
+  const sortedPokemons = pokemons.toSorted(
+    (positionA, positionB) =>
+      Number(positionA.pokedexPosition.slice(-4)) -
+      Number(positionB.pokedexPosition.slice(-4)),
+  );
+
   return (
     <ul className="pokemons">
-      {pokemons.map((pokemon) => (
+      {sortedPokemons.map((pokemon) => (
         <li key={pokemon.id}>
           <Pokecard pokemon={pokemon} />
         </li>
