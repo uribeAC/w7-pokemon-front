@@ -18,8 +18,11 @@ const Pokecard: React.FC<PokecardProps> = ({ pokemon }) => {
         width={200}
         height={200}
       />
-      <span className="pokemon__position">{pokemon.pokedexPosition}</span>
-      <div className="pokemon__data">
+      <div className="pokemon__top-data">
+        <span className="pokemon__position">{pokemon.pokedexPosition}</span>
+        <button className="pokemon__delete-button">X</button>
+      </div>
+      <div className="pokemon__bottom-data">
         <h3 className="pokemon__name">{pokemon.name}</h3>
         <div className="pokemon__types">
           {pokemon.types.map((type) => (

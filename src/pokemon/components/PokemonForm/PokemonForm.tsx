@@ -66,6 +66,7 @@ const PokemonForm: React.FC<PokemonFormProps> = ({ action }) => {
           Name:
         </label>
         <input
+          autoComplete="pikachu"
           type="text"
           className="pokemon-form__control"
           id="name"

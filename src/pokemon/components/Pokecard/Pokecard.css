@@ -17,7 +17,26 @@
   }
 }
 
-.pokemon__data {
+.pokemon__top-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.pokemon__position {
+  font-size: 1.2rem;
+}
+
+.pokemon__delete-button {
+  aspect-ratio: 1;
+  align-self: self-start;
+  padding: 1px;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 50%;
+  font-size: 1.3rem;
+}
+
+.pokemon__bottom-data {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -49,10 +68,6 @@
 .pokemon__types {
   display: flex;
   gap: 10px;
-}
-
-.pokemon__position {
-  font-size: 1.2rem;
 }
 
 .pokemon__type {
