@@ -23,6 +23,24 @@ class PokemonClient implements PokemonClientStructure {
     return pokemon;
   }
 
+  public async getPokemonNames(): Promise<string[]> {
+    const response = await fetch(
+      "https://pokeapi.co/api/v2/pokemon/?limit=1018&offset=0",
+    );
+
+    if (!response.ok) {
+      throw new Error("Error fetching pokemon names");
+    }
+
+    const pokemonNamesData = (await response.json()) as { results: [] };
+
+    const pokemonNames = pokemonNamesData.results.map(
+      (pokemon: { name: string }) => pokemon.name,
+    );
+
+    return pokemonNames;
+  }
+
   public async getPokemons(): Promise<Pokemon[]> {
     const response = await fetch(`${this.apiUrl}/pokemon`);
 
