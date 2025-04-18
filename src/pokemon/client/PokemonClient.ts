@@ -144,6 +144,26 @@ class PokemonClient implements PokemonClientStructure {
 
     return pokemonCaptured;
   }
+
+  public async removeFromPokeball(pokemonId: string): Promise<Pokemon> {
+    const response = await fetch(
+      `${this.apiUrl}/pokemon/remove-from-poke-ball/${pokemonId}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Error removing pokemon from pokeball");
+    }
+
+    const pokemonFreeDto = (await response.json()) as PokemonDto;
+
+    const pokemonFree = this.getPokemonWithTypes(pokemonFreeDto);
+
+    return pokemonFree;
+  }
 }
 
 export default PokemonClient;

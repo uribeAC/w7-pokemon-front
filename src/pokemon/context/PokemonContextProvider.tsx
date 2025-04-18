@@ -53,7 +53,18 @@ const PokemonContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
       setPokemons((pokemons) =>
         pokemons.toSpliced(pokemonPosition, 1, pokemonCaptured),
       );
+      return;
     }
+
+    const pokemonFree = await pokemonClient.removeFromPokeball(pokemonId);
+
+    const pokemonPosition = pokemons.findIndex(
+      (pokemon) => pokemon.id === pokemonId,
+    );
+
+    setPokemons((pokemons) =>
+      pokemons.toSpliced(pokemonPosition, 1, pokemonFree),
+    );
   };
 
   const pokemonsContextValue: PokemonContextStructure = {
