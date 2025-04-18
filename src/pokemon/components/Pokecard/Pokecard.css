@@ -20,6 +20,7 @@
 .pokemon__top-data {
   display: flex;
   flex-direction: column;
+  gap: 8px;
 }
 
 .pokemon__position {
@@ -27,13 +28,24 @@
 }
 
 .pokemon__delete-button {
+  z-index: 1;
   aspect-ratio: 1;
   align-self: self-start;
-  padding: 1px;
+  padding: 2px;
   color: var(--primary-color);
-  border: 1px solid var(--primary-color);
+  border: 2px solid var(--primary-color);
   border-radius: 50%;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
+
+  &:hover {
+    transition: 0.3s;
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+  }
+
+  &:focus {
+    outline: 3px solid var(--primary-color);
+  }
 }
 
 .pokemon__bottom-data {
@@ -50,10 +62,22 @@
   right: -12%;
 }
 
-.pokemon__pokeball {
+.pokemon__toggle-button {
   position: absolute;
   bottom: 10px;
   right: 10px;
+}
+
+.pokemon__pokeball {
+  &:hover {
+    transition: 0.3s;
+    scale: 1.2;
+    filter: grayscale(0.3);
+    opacity: 0.5;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    box-shadow: 0px 0px 7px 3px var(--primary-color);
+  }
 }
 
 .pokemon__pokeball--free {
@@ -109,7 +133,7 @@
 
 .pokemon__type--fighting {
   background-color: #c22e28;
-  color: #000;
+  color: #fff;
 }
 
 .pokemon__type--poison {

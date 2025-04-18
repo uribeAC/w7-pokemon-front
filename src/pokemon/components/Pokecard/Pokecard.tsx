@@ -41,13 +41,15 @@ const Pokecard: React.FC<PokecardProps> = ({
           ))}
         </div>
       </div>
-      <img
-        src="/pokeball.svg"
-        alt="pokeball"
-        className={`pokemon__pokeball${pokeballClass}`}
-        width={40}
-        height={40}
-      />
+      <button className="pokemon__toggle-button">
+        <img
+          src="/pokeball.svg"
+          alt="pokeball"
+          className={`pokemon__pokeball${pokeballClass}`}
+          width={40}
+          height={40}
+        />
+      </button>
     </article>
   );
 };
