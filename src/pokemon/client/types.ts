@@ -9,6 +9,8 @@ export interface PokemonClientStructure {
   ) => Promise<PokemonCommonData>;
   addPokemon: (pokemonCommonData: PokemonCommonData) => Promise<Pokemon>;
   deletePokemon: (pokemonId: string) => Promise<PokemonDto>;
+  addToPokeball: (pokemonId: string) => Promise<Pokemon>;
+  removeFromPokeball: (pokemonId: string) => Promise<Pokemon>;
 }
 export interface pokemonsTypes {
   types: { type: { name: string } }[];
