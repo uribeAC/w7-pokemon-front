@@ -4,6 +4,7 @@ import PokemonClient from "../../client/PokemonClient";
 import "./PokemonForm.css";
 import { useNavigate } from "react-router";
 import FormError from "../../../components/FormError/FormError";
+import FormAutosuggest from "../../../components/FormAutosuggest/FormAutosuggest";
 
 interface PokemonFormProps {
   action: (pokemonCommonData: PokemonCommonData) => Promise<Pokemon>;
@@ -66,14 +67,17 @@ const PokemonForm: React.FC<PokemonFormProps> = ({ action }) => {
           Name:
         </label>
         <input
-          autoComplete="pikachu"
+          spellCheck="false"
+          autoComplete="off"
           type="text"
           className="pokemon-form__control"
           id="name"
           value={pokemonData.name}
           onChange={changePokemonData}
+          list="pokemons"
           required
         />
+        <FormAutosuggest dataId="pokemons" pokemonName={pokemonData.name} />
       </div>
       <button
         className="pokemon-form__button"

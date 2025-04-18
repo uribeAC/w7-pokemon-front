@@ -9,6 +9,12 @@ const PokemonContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const pokemonClient = useMemo(() => new PokemonClient(), []);
 
+  const getAllPokemonNames = useCallback(async (): Promise<string[]> => {
+    const pokemonNames = await pokemonClient.getPokemonNames();
+
+    return pokemonNames;
+  }, [pokemonClient]);
+
   const loadPokemons = useCallback(async (): Promise<void> => {
     const apiPokemons = await pokemonClient.getPokemons();
 
@@ -35,6 +41,7 @@ const PokemonContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const pokemonsContextValue: PokemonContextStructure = {
     pokemons,
+    getAllPokemonNames,
     loadPokemons,
     createPokemon,
     deletePokemonById,

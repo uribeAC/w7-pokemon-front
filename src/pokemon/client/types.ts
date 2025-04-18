@@ -2,6 +2,7 @@ import { PokemonDto } from "../dto/types";
 import { Pokemon, PokemonCommonData } from "../types";
 
 export interface PokemonClientStructure {
+  getPokemonNames: () => Promise<string[]>;
   getPokemons: () => Promise<Pokemon[]>;
   getPokemonPokedexPosition: (
     pokemonName: string,
