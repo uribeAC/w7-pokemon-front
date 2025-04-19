@@ -12,16 +12,11 @@ const Pokecard: React.FC<PokecardProps> = ({
   pokemon: { id, imageAlt, imageUrl, isCaptured, name, pokedexPosition, types },
 }) => {
   const pokeballClass = isCaptured ? "" : " pokemon__pokeball--free";
-  const { deletePokemonById, togglePokeball, getPokemonFullData } =
-    usePokemons();
+  const { deletePokemonById, togglePokeball } = usePokemons();
 
   const navigate = useNavigate();
   const getPokemonDetails = (pokemonId: string) => {
-    getPokemonFullData(pokemonId);
-
-    setTimeout(() => {
-      navigate("/pokemon-detail");
-    }, 1000);
+    navigate(`/pokemon/${pokemonId}`);
   };
 
   return (

@@ -41,24 +41,24 @@ class PokemonClient implements PokemonClientStructure {
 
     const apiPokemonFullData = (await apiPokemon.json()) as pokemonApiFullData;
 
-    const abilities: { name: string; description: string }[] = [];
+    const abilities = await Promise.all(
+      apiPokemonFullData.abilities.map(async (ability) => {
+        const apiAbility = await fetch(ability.ability.url);
 
-    apiPokemonFullData.abilities.forEach(async (ability) => {
-      const apiAbility = await fetch(ability.ability.url);
+        const apiAbilityEffect = (await apiAbility.json()) as abilitiesFullData;
 
-      const apiAbilityEffect = (await apiAbility.json()) as abilitiesFullData;
+        const description = apiAbilityEffect.effect_entries.find(
+          (language) => language.language.name === "en",
+        )!;
 
-      const description = apiAbilityEffect.effect_entries.find(
-        (language) => language.language.name === "en",
-      )!;
+        const name = ability.ability.name;
 
-      const name = ability.ability.name;
-
-      abilities.push({
-        name: name[0].toUpperCase() + name.substring(1),
-        description: description.effect,
-      });
-    });
+        return {
+          name: name[0].toUpperCase() + name.substring(1),
+          description: description.effect,
+        };
+      }),
+    );
 
     const apiDescriptionResponse = await fetch(apiPokemonFullData.species.url);
 
@@ -69,17 +69,17 @@ class PokemonClient implements PokemonClientStructure {
       (language) => language.language.name === "en",
     )!;
 
-    const weaknessTypes: string[] = [];
+    const weaknessTypes = await Promise.all(
+      apiPokemonFullData.types.map(async (type) => {
+        const apiTypesResponse = await fetch(type.type.url);
 
-    apiPokemonFullData.types.forEach(async (type) => {
-      const apiTypesResponse = await fetch(type.type.url);
+        const apiTypes = (await apiTypesResponse.json()) as typesFullData;
 
-      const apiTypes = (await apiTypesResponse.json()) as typesFullData;
-
-      apiTypes.damage_relations.double_damage_from.forEach((type) => {
-        weaknessTypes.push(type.name);
-      });
-    });
+        return apiTypes.damage_relations.double_damage_from.map(
+          (type) => type.name,
+        );
+      }),
+    );
 
     const pokemonFullData: PokemonFullData = {
       ...pokemon,
@@ -87,7 +87,7 @@ class PokemonClient implements PokemonClientStructure {
       weight: apiPokemonFullData.weight,
       abilities: abilities,
       description: description.flavor_text,
-      typeWeakness: weaknessTypes,
+      typeWeakness: weaknessTypes.flat(),
     };
 
     return pokemonFullData;

@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import usePokemons from "../../hooks/usePokemons";
 import "./PokemonDetailPage.css";
+import { useParams } from "react-router";
+import { PokemonFullData } from "../../types";
 
 const PokemonDetailPage: React.FC = () => {
-  const { pokemonFullData } = usePokemons();
+  const { getPokemonFullData } = usePokemons();
+  const { id } = useParams<{ id: string }>();
 
-  if (pokemonFullData === null) {
-    return;
+  const [pokemonFullData, setPokemonFullData] =
+    useState<PokemonFullData | null>(null);
+
+  useEffect(() => {
+    const getPokemon = async () => {
+      const pokemonFullData = await getPokemonFullData(id!);
+
+      setPokemonFullData(pokemonFullData);
+    };
+
+    getPokemon();
+  }, [getPokemonFullData, id]);
+
+  if (!pokemonFullData) {
+    return <h2 className="loading">Loading...</h2>;
   }
 
   const {
@@ -48,9 +64,9 @@ const PokemonDetailPage: React.FC = () => {
             <span className="pokedetail__position">{pokedexPosition}</span>
           </header>
           <div className="pokedetail__data">
-            <p className="pokedetail__description">{description}</p>
-            <span className="pokedetail__stats-text">Height: {height}m</span>
-            <span className="pokedetail__stats-text">Weight: {weight}kg</span>
+            <p className="pokedetail__text">{description}</p>
+            <span className="pokedetail__text">Height: {height}m</span>
+            <span className="pokedetail__text">Weight: {weight}kg</span>
             <div className="pokedetail__stats-abilities">
               <h3 className="pokedetail__text">Abilities:</h3>
               {abilities.map((ability) => (
@@ -58,13 +74,10 @@ const PokemonDetailPage: React.FC = () => {
                   className="pokedetail__data-ability"
                   key={`${ability.name}1`}
                 >
-                  <span className="pokedetail__data-text" key={ability.name}>
+                  <span className="pokedetail__text" key={ability.name}>
                     {ability.name}
                   </span>
-                  <span
-                    className="pokedetail__data-text"
-                    key={ability.description}
-                  >
+                  <span className="pokedetail__text" key={ability.description}>
                     {ability.description}
                   </span>
                 </div>
