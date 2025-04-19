@@ -24,5 +24,25 @@ describe("Given the Pokecard component", () => {
 
       expect(pokemonImage).toBeVisible();
     });
+
+    test("Then it should show a 'X' inside a button", () => {
+      render(<Pokecard pokemon={vaporeon} />, {
+        wrapper: PokemonContextProvider,
+      });
+
+      const deleteButton = screen.getByRole("button", { name: "X" });
+
+      expect(deleteButton).toBeVisible();
+    });
+
+    test("Then it should show a button with 'Pokeball' as accesible name", () => {
+      render(<Pokecard pokemon={vaporeon} />, {
+        wrapper: PokemonContextProvider,
+      });
+
+      const pokeballButton = screen.getByLabelText(/pokeball/i);
+
+      expect(pokeballButton).toBeVisible();
+    });
   });
 });

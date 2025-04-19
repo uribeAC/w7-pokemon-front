@@ -14,4 +14,12 @@ describe("Given the Header component", () => {
 
     expect(appTitle).toBeVisible();
   });
+
+  test("Then it should show a 'Pokedex' link", () => {
+    render(<Header />, { wrapper: MemoryRouter });
+
+    const pokedexLink = screen.getByRole("link", { name: /pokedex/i });
+
+    expect(pokedexLink).toBeVisible();
+  });
 });
