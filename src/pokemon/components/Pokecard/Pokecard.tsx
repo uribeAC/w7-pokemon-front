@@ -2,10 +2,13 @@ import React from "react";
 import { Pokemon } from "../../types";
 import usePokemons from "../../hooks/usePokemons";
 import "./Pokecard.css";
+import PokemonClient from "../../client/PokemonClient";
 
 interface PokecardProps {
   pokemon: Pokemon;
 }
+
+const pokemonClient = new PokemonClient();
 
 const Pokecard: React.FC<PokecardProps> = ({
   pokemon: { id, imageAlt, imageUrl, isCaptured, name, pokedexPosition, types },
@@ -43,7 +46,11 @@ const Pokecard: React.FC<PokecardProps> = ({
       </div>
       <button
         className="pokemon__toggle-button"
-        onClick={() => togglePokeball(id, isCaptured)}
+        onClick={async () => {
+          togglePokeball(id, isCaptured);
+          const poke = await pokemonClient.getPokemon(id);
+          console.log(poke);
+        }}
         aria-label="pokeball"
       >
         <img

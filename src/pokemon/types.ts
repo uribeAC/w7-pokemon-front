@@ -1,4 +1,4 @@
-export type Pokemon = {
+export interface Pokemon {
   id: string;
   name: string;
   pokedexPosition: string;
@@ -6,7 +6,7 @@ export type Pokemon = {
   imageUrl: string;
   imageAlt: string;
   isCaptured: boolean;
-};
+}
 
 export type PokemonFormData = Omit<
   Pokemon,
@@ -17,3 +17,11 @@ export type PokemonCommonData = Omit<
   Pokemon,
   "id" | "types" | "imageUrl" | "imageAlt" | "isCaptured"
 >;
+
+export interface PokemonFullData extends Pokemon {
+  description: string;
+  height: number;
+  weight: number;
+  abilities: { name: string; description: string }[];
+  typeWeakness: string[];
+}
