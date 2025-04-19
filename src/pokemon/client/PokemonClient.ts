@@ -1,7 +1,15 @@
-import { Pokemon, PokemonCommonData } from "../types";
+import { Pokemon, PokemonCommonData, PokemonFullData } from "../types";
 import { mapPokemonDtoToPokemonWithTypes } from "../dto/transformers";
 import { PokemonDto } from "../dto/types";
-import { PokemonClientStructure, pokemonsTypes } from "./types";
+import {
+  abilitiesFullData,
+  pokemonApiFullData,
+  PokemonClientStructure,
+  pokemonsTypes,
+  speciesFullData,
+  typesFullData,
+} from "./types";
+
 class PokemonClient implements PokemonClientStructure {
   private apiUrl = import.meta.env.VITE_API_URL;
 
@@ -21,6 +29,69 @@ class PokemonClient implements PokemonClientStructure {
     const pokemon = mapPokemonDtoToPokemonWithTypes(pokemonDto, pokemonTypes);
 
     return pokemon;
+  }
+
+  private async getPokemonFullData(pokemon: Pokemon): Promise<PokemonFullData> {
+    const apiPokemon = await fetch(
+      `https://pokeapi.co/api/v2/pokemon/${pokemon.name.toLowerCase()}`,
+    );
+
+    if (!apiPokemon.ok) {
+      throw new Error("Error fetching pokemon data");
+    }
+
+    const apiPokemonFullData = (await apiPokemon.json()) as pokemonApiFullData;
+
+    const abilities = await Promise.all(
+      apiPokemonFullData.abilities.map(async (ability) => {
+        const apiAbility = await fetch(ability.ability.url);
+
+        const apiAbilityEffect = (await apiAbility.json()) as abilitiesFullData;
+
+        const description = apiAbilityEffect.effect_entries.find(
+          (language) => language.language.name === "en",
+        )!;
+
+        const name = ability.ability.name;
+
+        return {
+          name: name[0].toUpperCase() + name.substring(1),
+          description: description.effect,
+        };
+      }),
+    );
+
+    const apiDescriptionResponse = await fetch(apiPokemonFullData.species.url);
+
+    const apiDescription =
+      (await apiDescriptionResponse.json()) as speciesFullData;
+
+    const description = apiDescription.flavor_text_entries.find(
+      (language) => language.language.name === "en",
+    )!;
+
+    const weaknessTypes = await Promise.all(
+      apiPokemonFullData.types.map(async (type) => {
+        const apiTypesResponse = await fetch(type.type.url);
+
+        const apiTypes = (await apiTypesResponse.json()) as typesFullData;
+
+        return apiTypes.damage_relations.double_damage_from.map(
+          (type) => type.name,
+        );
+      }),
+    );
+
+    const pokemonFullData: PokemonFullData = {
+      ...pokemon,
+      height: apiPokemonFullData.height,
+      weight: apiPokemonFullData.weight,
+      abilities: abilities,
+      description: description.flavor_text,
+      typeWeakness: weaknessTypes.flat(),
+    };
+
+    return pokemonFullData;
   }
 
   public async getPokemonNames(): Promise<string[]> {
@@ -63,6 +134,22 @@ class PokemonClient implements PokemonClientStructure {
     const pokemons = await Promise.all(pokemonsPromises);
 
     return pokemons;
+  }
+
+  public async getPokemon(pokemonId: string): Promise<PokemonFullData> {
+    const response = await fetch(`${this.apiUrl}/pokemon/${pokemonId}`);
+
+    if (!response.ok) {
+      throw new Error("Error fetching pokemon");
+    }
+
+    const pokemonDto = (await response.json()) as PokemonDto;
+
+    const pokemon = await this.getPokemonWithTypes(pokemonDto);
+
+    const pokemonFullData = await this.getPokemonFullData(pokemon);
+
+    return pokemonFullData;
   }
 
   public async getPokemonPokedexPosition(

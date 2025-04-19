@@ -2,6 +2,7 @@ import React from "react";
 import { Pokemon } from "../../types";
 import usePokemons from "../../hooks/usePokemons";
 import "./Pokecard.css";
+import { useNavigate } from "react-router";
 
 interface PokecardProps {
   pokemon: Pokemon;
@@ -12,6 +13,11 @@ const Pokecard: React.FC<PokecardProps> = ({
 }) => {
   const pokeballClass = isCaptured ? "" : " pokemon__pokeball--free";
   const { deletePokemonById, togglePokeball } = usePokemons();
+
+  const navigate = useNavigate();
+  const getPokemonDetails = (pokemonId: string) => {
+    navigate(`/pokemon/${pokemonId}`);
+  };
 
   return (
     <article className="pokemon">
@@ -29,6 +35,12 @@ const Pokecard: React.FC<PokecardProps> = ({
           onClick={() => deletePokemonById(id)}
         >
           X
+        </button>
+        <button
+          className="pokemon__delete-button"
+          onClick={() => getPokemonDetails(id)}
+        >
+          +
         </button>
       </div>
       <div className="pokemon__bottom-data">

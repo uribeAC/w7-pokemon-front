@@ -3,6 +3,7 @@ import App from "../components/App/App";
 import PokedexPage from "../pokemon/pages/PokedexPage/PokedexPage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import AddPokemonPage from "../pokemon/pages/AddPokemonPage/AddPokemonPage";
+import PokemonDetailPage from "../pokemon/pages/PokemonDetailPage/PokemonDetailPage";
 
 const AppRouter: React.FC = () => {
   return (
@@ -11,6 +12,7 @@ const AppRouter: React.FC = () => {
         <Route index element={<Navigate to="/pokedex" />}></Route>
         <Route path="pokedex" element={<PokedexPage />}></Route>
         <Route path="add-pokemon" element={<AddPokemonPage />}></Route>
+        <Route path="pokemon/:id" element={<PokemonDetailPage />}></Route>
         <Route path="*" element={<NotFoundPage />}></Route>
       </Route>
     </Routes>
