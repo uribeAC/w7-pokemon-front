@@ -1,5 +1,5 @@
 import { PropsWithChildren, useCallback, useMemo, useState } from "react";
-import { Pokemon, PokemonCommonData } from "../types";
+import { Pokemon, PokemonCommonData, PokemonFullData } from "../types";
 import PokemonContext from "./PokemonContext";
 import PokemonContextStructure from "./types";
 import PokemonClient from "../client/PokemonClient";
@@ -67,6 +67,14 @@ const PokemonContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     );
   };
 
+  const getPokemonFullData = async (
+    pokemonId: string,
+  ): Promise<PokemonFullData> => {
+    const pokemonFullData = await pokemonClient.getPokemon(pokemonId);
+
+    return pokemonFullData;
+  };
+
   const pokemonsContextValue: PokemonContextStructure = {
     pokemons,
     getAllPokemonNames,
@@ -74,6 +82,7 @@ const PokemonContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     createPokemon,
     deletePokemonById,
     togglePokeball,
+    getPokemonFullData,
   };
 
   return (
