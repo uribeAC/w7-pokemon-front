@@ -43,14 +43,20 @@ class PokemonClient implements PokemonClientStructure {
 
     const abilities: { name: string; description: string }[] = [];
 
-    apiPokemonFullData.abilities.forEach(async (ability, index) => {
+    apiPokemonFullData.abilities.forEach(async (ability) => {
       const apiAbility = await fetch(ability.ability.url);
 
       const apiAbilityEffect = (await apiAbility.json()) as abilitiesFullData;
 
+      const description = apiAbilityEffect.effect_entries.find(
+        (language) => language.language.name === "en",
+      )!;
+
+      const name = ability.ability.name;
+
       abilities.push({
-        name: ability.ability.name,
-        description: apiAbilityEffect.effect_entries[index].effect,
+        name: name[0].toUpperCase() + name.substring(1),
+        description: description.effect,
       });
     });
 
@@ -58,6 +64,10 @@ class PokemonClient implements PokemonClientStructure {
 
     const apiDescription =
       (await apiDescriptionResponse.json()) as speciesFullData;
+
+    const description = apiDescription.flavor_text_entries.find(
+      (language) => language.language.name === "en",
+    )!;
 
     const weaknessTypes: string[] = [];
 
@@ -76,7 +86,7 @@ class PokemonClient implements PokemonClientStructure {
       height: apiPokemonFullData.height,
       weight: apiPokemonFullData.weight,
       abilities: abilities,
-      description: apiDescription.flavor_text_entries[0].flavor_text,
+      description: description.flavor_text,
       typeWeakness: weaknessTypes,
     };
 

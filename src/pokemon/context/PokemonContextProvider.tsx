@@ -6,6 +6,8 @@ import PokemonClient from "../client/PokemonClient";
 
 const PokemonContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [pokemonFullData, setPokemonFullData] =
+    useState<PokemonFullData | null>(null);
 
   const pokemonClient = useMemo(() => new PokemonClient(), []);
 
@@ -67,16 +69,15 @@ const PokemonContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     );
   };
 
-  const getPokemonFullData = async (
-    pokemonId: string,
-  ): Promise<PokemonFullData> => {
+  const getPokemonFullData = async (pokemonId: string): Promise<void> => {
     const pokemonFullData = await pokemonClient.getPokemon(pokemonId);
 
-    return pokemonFullData;
+    setPokemonFullData(pokemonFullData);
   };
 
   const pokemonsContextValue: PokemonContextStructure = {
     pokemons,
+    pokemonFullData,
     getAllPokemonNames,
     loadPokemons,
     createPokemon,

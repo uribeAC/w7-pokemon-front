@@ -26,12 +26,12 @@ export interface pokemonApiFullData {
 }
 
 export interface abilitiesFullData {
-  effect_entries: { effect: string }[];
+  effect_entries: { effect: string; language: { name: string } }[];
 }
 
 export interface speciesFullData {
   evolution_chain: { url: string };
-  flavor_text_entries: [{ flavor_text: string }];
+  flavor_text_entries: { flavor_text: string; language: { name: string } }[];
 }
 
 export interface typesFullData {
