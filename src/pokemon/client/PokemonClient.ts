@@ -9,6 +9,7 @@ import {
   speciesFullData,
   typesFullData,
 } from "./types";
+
 class PokemonClient implements PokemonClientStructure {
   private apiUrl = import.meta.env.VITE_API_URL;
 

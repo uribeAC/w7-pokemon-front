@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import usePokemons from "../../hooks/usePokemons";
-import "./PokemonDetailPage.css";
 import { useParams } from "react-router";
+import usePokemons from "../../hooks/usePokemons";
 import { PokemonFullData } from "../../types";
+import "./PokemonDetailPage.css";
 
 const PokemonDetailPage: React.FC = () => {
   const { getPokemonFullData } = usePokemons();

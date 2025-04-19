@@ -55,7 +55,7 @@ const Pokecard: React.FC<PokecardProps> = ({
       </div>
       <button
         className="pokemon__toggle-button"
-        onClick={async () => togglePokeball(id, isCaptured)}
+        onClick={() => togglePokeball(id, isCaptured)}
         aria-label="pokeball"
       >
         <img

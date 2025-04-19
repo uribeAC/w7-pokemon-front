@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router";
 import Pokedex from "./Pokedex";
 import { eevees, flareon, jolteon, vaporeon } from "../../fixtures";
 import PokemonContextProvider from "../../context/PokemonContextProvider";
-import { MemoryRouter } from "react-router";
 
 describe("Given the Pokedex component", () => {
   describe("When it receives 'Vaporeon', 'Jolteon' and 'Flareon'", () => {
