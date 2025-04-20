@@ -46,4 +46,15 @@
     background-color: var(--primary-color);
     border: 4px solid var(--secondary-color);
   }
+
+  @media (prefers-reduced-motion) {
+    background-image: url("/charizard-draw.webp");
+    background-size: contain;
+  }
+}
+
+.random-pokemon__gif {
+  @media (prefers-reduced-motion) {
+    visibility: hidden;
+  }
 }

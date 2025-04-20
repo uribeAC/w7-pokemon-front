@@ -13,7 +13,13 @@ const AddPokemonPage: React.FC = () => {
           <h2 className="add-pokemon__title">Add a new pokemon</h2>
           <PokemonForm action={createPokemon} />
         </div>
-        <img src="/random-pokemons.gif" alt="" className="random-pokemon" />
+        <div className="random-pokemon">
+          <img
+            src="/random-pokemons.gif"
+            alt=""
+            className="random-pokemon__gif"
+          />
+        </div>
       </div>
     </main>
   );

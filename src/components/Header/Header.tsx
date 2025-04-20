@@ -7,7 +7,7 @@ const Header: React.FC = () => {
     <header className="main-header">
       <h1 className="title">POKEMON</h1>
       <img
-        src="/pikachu.gif"
+        src="/pikachu.webp"
         alt="pikachu running"
         className="main-header__gif"
         width={80}
