@@ -16,8 +16,10 @@ const AddPokemonPage: React.FC = () => {
         <div className="random-pokemon">
           <img
             src="/random-pokemons.gif"
-            alt=""
+            alt="gif of random pokemon as pencil drawings"
             className="random-pokemon__gif"
+            width={200}
+            height={200}
           />
         </div>
       </div>
