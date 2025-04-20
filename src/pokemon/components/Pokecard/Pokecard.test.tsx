@@ -46,7 +46,7 @@ describe("Given the Pokecard component", () => {
         },
       );
 
-      const deleteButton = screen.getByRole("button", { name: "delete" });
+      const deleteButton = screen.getByLabelText(/delete/i);
 
       expect(deleteButton).toBeVisible();
     });
