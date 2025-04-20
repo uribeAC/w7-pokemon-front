@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pokemon, PokemonCommonData, PokemonFormData } from "../../types";
+import { Pokemon, PokemonCommonData } from "../../types";
 import PokemonClient from "../../client/PokemonClient";
 import "./PokemonForm.css";
 import { useNavigate } from "react-router";
@@ -11,18 +11,23 @@ interface PokemonFormProps {
 }
 
 const PokemonForm: React.FC<PokemonFormProps> = ({ action }) => {
-  const initialPokemonFormData: PokemonFormData = {
+  const initialPokemonFormData: PokemonCommonData = {
     name: "",
+    pokedexPosition: "",
+    imageUrl: "",
   };
 
-  const [pokemonData, setPokemonData] = useState<PokemonFormData>(
+  const [pokemonData, setPokemonData] = useState<PokemonCommonData>(
     initialPokemonFormData,
   );
 
   const changePokemonData = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
 
-    setPokemonData({ name: newValue });
+    setPokemonData((pokemonData) => ({
+      ...pokemonData,
+      [event.target.id]: newValue,
+    }));
   };
 
   const isFormValid = pokemonData.name !== "";
@@ -37,12 +42,14 @@ const PokemonForm: React.FC<PokemonFormProps> = ({ action }) => {
     event.preventDefault();
 
     try {
-      const pokemonCommonData = await pokemonClient.getPokemonPokedexPosition(
-        pokemonData.name,
-      );
+      const pokemonApiCommonData =
+        await pokemonClient.getPokemonPokedexPosition(pokemonData.name);
+
+      const pokemon =
+        pokemonData.pokedexPosition === "" ? pokemonApiCommonData : pokemonData;
 
       try {
-        await action(pokemonCommonData);
+        await action(pokemon);
 
         navigate("/pokedex");
       } catch {
@@ -63,8 +70,12 @@ const PokemonForm: React.FC<PokemonFormProps> = ({ action }) => {
   return (
     <form className="pokemon-form" onSubmit={onSubmitForm}>
       <div className="pokemon-form__group">
-        <label htmlFor="name" className="pokemon-form__text">
-          Name:
+        <label
+          htmlFor="name"
+          className="pokemon-form__text"
+          aria-required="true"
+        >
+          *(required) Name:
         </label>
         <input
           spellCheck="false"
@@ -78,6 +89,34 @@ const PokemonForm: React.FC<PokemonFormProps> = ({ action }) => {
           required
         />
         <FormAutosuggest dataId="pokemons" pokemonName={pokemonData.name} />
+      </div>
+      <div className="pokemon-form__group">
+        <label htmlFor="pokedexPosition" className="pokemon-form__text">
+          Pokedex position:
+        </label>
+        <input
+          spellCheck="false"
+          autoComplete="off"
+          type="number"
+          className="pokemon-form__control"
+          id="pokedexPosition"
+          value={pokemonData.pokedexPosition}
+          onChange={changePokemonData}
+        />
+      </div>
+      <div className="pokemon-form__group">
+        <label htmlFor="imageUrl" className="pokemon-form__text">
+          Image Url:
+        </label>
+        <input
+          spellCheck="false"
+          autoComplete="off"
+          type="url"
+          className="pokemon-form__control"
+          id="imageUrl"
+          value={pokemonData.imageUrl}
+          onChange={changePokemonData}
+        />
       </div>
       <button
         className="pokemon-form__button"
