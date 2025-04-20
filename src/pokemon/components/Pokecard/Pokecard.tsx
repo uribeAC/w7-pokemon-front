@@ -31,16 +31,18 @@ const Pokecard: React.FC<PokecardProps> = ({
       <div className="pokemon__top-data">
         <span className="pokemon__position">{pokedexPosition}</span>
         <button
-          className="pokemon__delete-button"
+          className="pokemon__button"
+          aria-label="delete"
           onClick={() => deletePokemonById(id)}
         >
           X
         </button>
         <button
-          className="pokemon__delete-button"
+          className="pokemon__button"
+          aria-label="more info"
           onClick={() => getPokemonDetails(id)}
         >
-          +
+          info
         </button>
       </div>
       <div className="pokemon__bottom-data">
@@ -56,7 +58,7 @@ const Pokecard: React.FC<PokecardProps> = ({
       <button
         className="pokemon__toggle-button"
         onClick={() => togglePokeball(id, isCaptured)}
-        aria-label="pokeball"
+        aria-label="add or remove from pokeball"
       >
         <img
           src="/pokeball.svg"

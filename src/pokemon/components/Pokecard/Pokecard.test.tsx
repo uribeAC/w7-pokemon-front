@@ -46,12 +46,12 @@ describe("Given the Pokecard component", () => {
         },
       );
 
-      const deleteButton = screen.getByRole("button", { name: "X" });
+      const deleteButton = screen.getByLabelText(/delete/i);
 
       expect(deleteButton).toBeVisible();
     });
 
-    test("Then it should show a button with 'Pokeball' as accesible name", () => {
+    test("Then it should show a button with 'Add or remove from pokeball' as accesible name", () => {
       render(
         <MemoryRouter>
           <Pokecard pokemon={vaporeon} />
@@ -61,7 +61,9 @@ describe("Given the Pokecard component", () => {
         },
       );
 
-      const pokeballButton = screen.getByLabelText(/pokeball/i);
+      const pokeballButton = screen.getByLabelText(
+        /add or remove from pokeball/i,
+      );
 
       expect(pokeballButton).toBeVisible();
     });
