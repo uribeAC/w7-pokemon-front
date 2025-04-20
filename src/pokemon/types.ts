@@ -15,7 +15,7 @@ export type PokemonFormData = Omit<
 
 export type PokemonCommonData = Omit<
   Pokemon,
-  "id" | "types" | "imageUrl" | "imageAlt" | "isCaptured"
+  "id" | "types" | "imageAlt" | "isCaptured"
 >;
 
 export interface PokemonFullData extends Pokemon {

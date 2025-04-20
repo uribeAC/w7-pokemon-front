@@ -1,8 +1,12 @@
 .error-message {
   position: absolute;
   max-width: 85%;
-  bottom: -80px;
+  bottom: -40px;
   padding: 5px 20px;
   font-size: 1.2rem;
   color: var(--primary-color);
+
+  @media (width < 400px) {
+    bottom: -60px;
+  }
 }
